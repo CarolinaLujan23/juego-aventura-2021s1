@@ -1,45 +1,43 @@
 import wollok.game.*
 import fondo.*
 import personajes.*
+import elementos.*
 
 object nivelLlaves {
 
 	method configurate() {
-		// fondo - es importante que sea el primer visual que se agregue
 		game.addVisual(new Fondo(image="fondoCompleto.png"))
-				 
-		// otros visuals, p.ej. bloques o llaves
-			
-		// personaje, es importante que sea el último visual que se agregue
+		game.addVisual(new Puerta(image="puerta.png"))
 		game.addVisual(personajeSimple)
+		game.addVisual(new Llave(position=game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))))
+		game.addVisual(new Llave(position=game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))))
+		game.addVisual(new Llave(position=game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))))
+		self.configurarTeclas()
 		
-		// teclado
-		// este es para probar, no es necesario dejarlo
-		keyboard.g().onPressDo({ self.ganar() })
+	}
+		
+	method configurarTeclas() {
+		keyboard.up().onPressDo({personajeSimple.moverHaciaArriba()})
+		keyboard.down().onPressDo({personajeSimple.moverHaciaAbajo()})
+		keyboard.right().onPressDo({personajeSimple.moverHaciaDerecha()})
+		keyboard.left().onPressDo({personajeSimple.moverHaciaIzquierda()})	
+		keyboard.space().onPressDo({personajeSimple.energiaQueTiene()})
+		keyboard.n().onPressDo({personajeSimple.agarrar()})
+		keyboard.t().onPressDo({ self.terminar() })
 
-		// colisiones, acá sí hacen falta
+		// colisiones, ac� s� hacen falta
 	}
 	
-	method ganar() {
-		// es muy parecido al terminar() de nivelBloques
-		// el perder() también va a ser parecido
-		
-		// game.clear() limpia visuals, teclado, colisiones y acciones
+	method terminar() {
 		game.clear()
-		// después puedo volver a agregar el fondo, y algún visual para que no quede tan pelado
 		game.addVisual(new Fondo(image="fondoCompleto.png"))
-		// después de un ratito ...
 		game.schedule(2500, {
 			game.clear()
-			// cambio de fondo
 			game.addVisual(new Fondo(image="ganamos.png"))
-			// después de un ratito ...
 			game.schedule(3000, {
-				// fin del juego
+				game.clear()
 				game.stop()
 			})
 		})
 	}
-	
-	
 }
