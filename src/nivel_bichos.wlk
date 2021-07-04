@@ -1,20 +1,26 @@
-import wollok.game.*
 import fondo.*
 import personajes.*
-import elementos.*
+import elementos.* 
+import wollok.game.*
 
-object nivelLlaves {
+object nivelBichos {
 
 	method configurate() {
-		game.addVisual(new Fondo(image="fondoCompleto.png"))
-		game.addVisual(new Puerta())
 		game.addVisual(personajeSimple)
-		game.addVisual(new Llave(position=game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))))
-		game.addVisual(new Llave(position=game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))))
-		game.addVisual(new Llave(position=game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))))
+		game.addVisual(new Fondo(image="fondoCompleto.png"))
 		self.configurarTeclas()
+		self.aparecenBichos()
 		
+		}
+	method bichos(){
+		game.onTick(2000, "movimiento", {e=>e.movete()})
 	}
+		
+	method aparecenBichos() {
+		game.whenCollideDo(personajeSimple, {e=>e.perderEnergia()})
+		}
+		
+	method matarBicho() {}	
 		
 	method configurarTeclas() {
 		keyboard.up().onPressDo({personajeSimple.moverHaciaArriba()})
@@ -22,12 +28,11 @@ object nivelLlaves {
 		keyboard.right().onPressDo({personajeSimple.moverHaciaDerecha()})
 		keyboard.left().onPressDo({personajeSimple.moverHaciaIzquierda()})	
 		keyboard.space().onPressDo({personajeSimple.energiaQueTiene()})
-		keyboard.n().onPressDo({personajeSimple.agarrar()})
-		keyboard.t().onPressDo({ self.terminar() })
+		keyboard.g().onPressDo({ self.ganar() })
 
 	}
 	
-	method terminar() {
+	method ganar() {
 		game.clear()
 		game.addVisual(new Fondo(image="fondoCompleto.png"))
 		game.schedule(2500, {

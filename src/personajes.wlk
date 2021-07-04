@@ -2,14 +2,12 @@ import wollok.game.*
 import nivel_bloques.*
 import elementos.*
 
-// en la implementación real, conviene tener un personaje por nivel
-// los personajes probablemente tengan un comportamiendo más complejo que solamente
-// imagen y posición
-
 object personajeSimple {
 	var property position = game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))
 	var property energia = 40 
 	var property pasos = 0
+	const property llaves = #{}	
+	var property llave
 
 	method image() = "player.png"
 	
@@ -83,9 +81,10 @@ object personajeSimple {
 	}		
 	
 	method agarrar() {
-		if (esBloque().(self.position())
+		if (self.llave().esAgarrada(llave)) {
+			(llave.esLlave())
+			llaves.add(llave)
 		}
-		
 	}
 	
 }

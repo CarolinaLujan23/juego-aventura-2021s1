@@ -13,11 +13,16 @@ class Bloque {
 class Llave {
 	var property position = game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))
 	method image() = "llave.png" 
-
+	
 	method esLlave() = true
+
+	method esAgarrada(llave) {
+		if(llave.esLlave())
+			game.removeVisual(llave) 
+		}
 	}
 	
-object puerta {
+class Puerta {
 	const property position = game.at(7,10)
 	method image() = "puerta.png"
 }	

@@ -4,13 +4,12 @@ import personajes.*
 import elementos.*
 import nivel_llaves.*
 
-
 object nivelBloques {
 
 	method configurate() {
 		game.addVisual(new Fondo(image="fondoCompleto.png"))
 		game.addVisual(personajeSimple)
-		game.addVisual(puerta)
+		game.addVisual(new Puerta())
 		game.addVisual(new Bloque(position=game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))))
 		game.addVisual(new Bloque(position=game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))))
 		game.addVisual(new Bloque(position=game.at(0.randomUpTo(game.width()-1).truncate(0), 0.randomUpTo(game.height()-1).truncate(0))))
